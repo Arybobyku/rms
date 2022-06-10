@@ -4,94 +4,102 @@
 
 <div class="container-fluid">
 
+    @if (session('status'))
     <div class="card-body">
-        @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
-        @endif
     </div>
+        @endif
 
-    <table class="table">
-        <h1 class="float-right">Barang Masuk Di Gudang</h1>
+    <button type="button" class="btn btn-dark m-2" data-toggle="modal" data-target="#staticBackdrop">
+        Tambah Barang
+    </button>
 
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#staticBackdrop">
-            Tambah Barang
-        </button>
-        <br>
-        <br>
-        <thead class="bg-danger">
+    <div class="card m-2">
+        <div class="card-header">
+          <h3 class="card-title">Data Barang Masuk</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-hover">
+            <thead class="bg-danger">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">tanggal Masuk</th>
-                <th scope="col">pengirim</th>
-                <th scope="col">penerima</th>
-                <th scope="col">tujuan</th>
-                <th scope="col">barang</th>
-                <th scope="col">satuan</th>
-                <th scope="col">berat/pcs</th>
-                <th scope="col">ongkos</th>
-                <th scope="col">total</th>
-                <th scope="col">jenis_pembayaran</th>
-                <th scope="col">Aksi</th>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">tanggal Masuk</th>
+                    <th scope="col">pengirim</th>
+                    <th scope="col">penerima</th>
+                    <th scope="col">tujuan</th>
+                    <th scope="col">barang</th>
+                    <th scope="col">satuan</th>
+                    <th scope="col">berat/pcs</th>
+                    <th scope="col">ongkos</th>
+                    <th scope="col">total</th>
+                    <th scope="col">jenis_pembayaran</th>
+                    <th scope="col">Aksi</th>
+                </tr>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($data_barang as $barang)
-
-            <?php if(session('index') !=null &&   session('index')==$barang->id) : ?>
-            <tr class="bg-secondary">
-                <?php else : ?>
-            <tr>
-                <?php endif; ?>
-                <th scope="row">{{ $loop->iteration }}</th>
-                <td>{{date('d-m-Y', strtotime($barang->tanggal));}}</td>
-                <td>{{ $barang->pengirim }}</td>
-                <td>{{ $barang->penerima }}</td>
-                <td>{{ $barang->tujuan }}</td>
-                <td>{{ $barang->barang }}</td>
-                <td>{{ $barang->satuan }}</td>
-                <td class="text-center">{{ $barang->berat }}</td>
-                <td>Rp. {{ number_format($barang->ongkos) }},-</td>
-                <td>Rp. {{ number_format($barang->total) }},-</td>
-                <td>{{ $barang->jenis_pembayaran }}</td>
-                <td class="row">
-                    <div class="col-sm-3">
-                        <form action="{{ route('barangDetail',  $barang->id)}}" method="GET">
-                            @csrf
-                            @method('GET')
-                            <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-print"></i></button>
-                        </form>
-                    </div>
-                    <div class="col-sm-3">
-                        <form action="{{ route('barangProses', $barang->id) }}" method="GET">
-                            @csrf
-                            @method('GET')
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="far fa-eye"></i></button>
-                        </form>
-                    </div>
-                    <div class="col-sm-3">
-                        <form action="{{ route('barangUpdate',  $barang->id)}}" method="GET">
-                            @csrf
-                            @method('GET')
-                            <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button>
-                        </form>
-                    </div>
-                    <div class="col-sm-3">
-                        <form action="{{ route('barang.destroy', $barang->id) }}" method="post"
-                            onsubmit="return confirm('Apakah anda sudah yakin menghapus data ini ?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($data_barang as $barang)
+    
+                <?php if(session('index') !=null &&   session('index')==$barang->id) : ?>
+                <tr class="bg-secondary">
+                    <?php else : ?>
+                <tr>
+                    <?php endif; ?>
+                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{date('d-m-Y', strtotime($barang->tanggal));}}</td>
+                    <td>{{ $barang->pengirim }}</td>
+                    <td>{{ $barang->penerima }}</td>
+                    <td>{{ $barang->tujuan }}</td>
+                    <td>{{ $barang->barang }}</td>
+                    <td>{{ $barang->satuan }}</td>
+                    <td class="text-center">{{ $barang->berat }}</td>
+                    <td>Rp. {{ number_format($barang->ongkos) }},-</td>
+                    <td>Rp. {{ number_format($barang->total) }},-</td>
+                    <td>{{ $barang->jenis_pembayaran }}</td>
+                    <td class="row">
+                        <div class="col">
+                            <form action="{{ route('barangDetail',  $barang->id)}}" method="GET">
+                                @csrf
+                                @method('GET')
+                                <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form action="{{ route('barangUpdate',  $barang->id)}}" method="GET">
+                                @csrf
+                                @method('GET')
+                                <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form action="{{ route('barangProses', $barang->id) }}" method="GET">
+                                @csrf
+                                @method('GET')
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check"></i></button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form action="{{ route('barang.destroy', $barang->id) }}" method="post"
+                                onsubmit="return confirm('Apakah anda sudah yakin menghapus data ini ?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
 
     <div class="container">
         {{ $data_barang->links('pagination::bootstrap-4') }}
@@ -222,5 +230,19 @@
                     );
                     $('#total').val(hasil);
                 });
+            });
+
+            
+                $(function () {
+                $("#example1").DataTable({
+                "responsive": true, 
+                "lengthChange": false,
+                "ordering": true,
+                "info": true,
+                "paging":false,
+                "autoWidth": false,
+                "buttons": ["csv", "excel", "pdf", "print",]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
             });
         </script>

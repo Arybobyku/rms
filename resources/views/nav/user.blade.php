@@ -3,17 +3,17 @@
 @section('content')
 <div class="container-fluid">
 
+    @if (session('status'))
     <div class="card-body">
-        @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
-        @endif
     </div>
+    @endif
 
-    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#staticBackdrop">
+    {{-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#staticBackdrop">
         Tambah Akun
-    </button>
+    </button> --}}
 
     <table class="table">
         {{-- <div>

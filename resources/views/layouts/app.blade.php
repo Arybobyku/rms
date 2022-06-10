@@ -23,12 +23,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-white">
+<body class="bg-danger">
     <div id="app">
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    
+    <script src="{{asset('plugins/fullcalendar/main.js')}}"></script>
+    <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 </body>
 
 </html>

@@ -3,44 +3,49 @@
 @section('content')
 <div class="container-fluid">
 
+    @if (session('status'))
     <div class="card-body">
-        @if (session('status'))
         <div class="alert alert-success " role="alert">
             {{ session('status') }}
         </div>
-        @endif
     </div>
+        @endif
+</div>
 
-    <table class="table" id="myTable">
-        <div class="col-md-3">
-            <form method="GET" enctype="multipart/form-data">
-                @csrf
-                @method('GET')
-                <div class="input-group mb-3">
-                    <input type="date" class="form-control" placeholder="Cari Plat" name="tanggal">
-                    <div class="input-group-append">
-                        <button class="btn btn-dark" type="submit">Cari</button>
-                    </div>
-                </div>
-            </form>
+<div class="col-md-3">
+    <form method="GET" enctype="multipart/form-data">
+        @csrf
+        @method('GET')
+        <div class="input-group mb-3">
+            <input type="date" class="form-control" placeholder="Cari Plat" name="tanggal">
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Cari</button>
+            </div>
         </div>
+    </form>
+</div>
+
+<div class="card m-2">
+    <div class="card-header">
+      <h3 class="card-title">Data Barang</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-hover">
         <thead class="bg-danger">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">No Truk</th>
-                <th scope="col">Tanggal Keluar</th>
-                <th scope="col">Tanggal Masuk</th>
-                <th scope="col">Pengirim</th>
-                <th scope="col">Penerima</th>
-                <th scope="col">Tujuan</th>
-                <th scope="col">Barang</th>
-                <th scope="col">Satuan</th>
-                <th scope="col">Berat/pcs</th>
-                <th scope="col">Ongkos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Jenis Pembayaran</th>
-                <th scope="col">Aksi</th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">No Truk</th>
+            <th scope="col">Tanggal Keluar</th>
+            <th scope="col">Tanggal Masuk</th>
+            <th scope="col">Pengirim</th>
+            <th scope="col">Penerima</th>
+            <th scope="col">Tujuan</th>
+            <th scope="col">Ongkos</th>
+            <th scope="col">Total</th>
+            <th scope="col">Jenis Pembayaran</th>
+            <th scope="col">Aksi</th>
+        </tr>
         </thead>
         <tbody>
             @foreach ($data_barang as $barang)
@@ -52,9 +57,6 @@
                 <td>{{ $barang->pengirim }}</td>
                 <td>{{ $barang->penerima }}</td>
                 <td>{{ $barang->tujuan }}</td>
-                <td class="text-center">{{ $barang->barang }}</td>
-                <td>{{ $barang->satuan }}</td>
-                <td class="text-center">{{ $barang->berat }}</td>
                 <td>Rp. {{ number_format($barang->ongkos) }},-</td>
                 <td>Rp. {{ number_format($barang->total) }},-</td>
                 <td>{{ $barang->jenis_pembayaran }}</td>
@@ -80,8 +82,12 @@
             </tr>
             @endforeach
         </tbody>
-    </table>
-</div>
+        <tfoot>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
 <div class="container">
     {{ $data_barang->links('pagination::bootstrap-4') }}
 </div>
@@ -102,4 +108,18 @@
             );
         });
     });
+
+    $(function () {
+                $("#example1").DataTable({
+                "responsive": true, 
+                "lengthChange": false,
+                "ordering": true,
+                "info": true,
+                "paging":false,
+                "autoWidth": false,
+                "buttons": ["csv", "excel", "pdf", "print",]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            });
+    
 </script>

@@ -45,3 +45,6 @@ Route::get('/user', [App\Http\Controllers\UserController::class, 'user'])->name(
 Route::post('/user/changeAprrove/{id}', [App\Http\Controllers\UserController::class, 'approve'])->name('user.approve')->middleware('auth');
 Route::post('/user/changeReject/{id}', [App\Http\Controllers\UserController::class, 'reject'])->name('user.reject')->middleware('auth');
 
+//dashboard
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'getAllBarang'])->name('dashboard')->middleware('auth');
+

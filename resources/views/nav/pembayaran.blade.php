@@ -72,12 +72,14 @@
                     <p class="btn btn-success btn-sm">Sudah Bayar</p>
                 </td>
                 <td>
+                    @if ( Auth::user()->role==1)
                     <form action="{{ route('pembayaran.updateCancle', $data->barang->id) }}" method="GET" class="col-5"
                         onsubmit="return confirm('Apakah anda sudah yakin membatalkan pembayaran ?');">
                         @csrf
                         @method('GET')
                         <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-times"></i></button>
                     </form>
+                    @endif
                     <div class="col-5">
                         <a class="btn btn-info btn-sm" href="{{ route('pembayaranDetail', $data->barang->id) }}">
                             <i class="fas fa-print"></i>

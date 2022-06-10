@@ -38,3 +38,9 @@ Route::get('/pembayaran/{id}', [App\Http\Controllers\PembayaranController::class
 Route::post('/pembayaran/update', [App\Http\Controllers\PembayaranController::class, 'update'])->name('pembayaran.update')->middleware('auth');
 Route::get('/pembayaran/update/{id}', [App\Http\Controllers\PembayaranController::class, 'pembayaranUpdate'])->name('pembayaran.proses')->middleware('auth');
 Route::get('/pembayaran/updatecancle/{id}', [App\Http\Controllers\PembayaranController::class, 'pembayaranUpdateCancle'])->name('pembayaran.updateCancle')->middleware('auth');
+
+//user controller
+Route::get('/user', [App\Http\Controllers\UserController::class, 'user'])->name('user')->middleware('auth');
+Route::post('/user/changeAprrove/{id}', [App\Http\Controllers\UserController::class, 'approve'])->name('user.approve')->middleware('auth');
+Route::post('/user/changeReject/{id}', [App\Http\Controllers\UserController::class, 'reject'])->name('user.reject')->middleware('auth');
+

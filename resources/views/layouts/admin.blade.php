@@ -127,6 +127,17 @@
                                 </p>
                             </a>
                         </li>
+                        @if ( Auth::user()->role==1)
+                        <li class="nav-item has-treeview">
+                            <a href="{{ route('user') }}"
+                                class="nav-link {{ request()->is('user') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Kelola Akun
+                                </p>
+                            </a>
+                        </li> 
+                        @endif
                     </ul>
                     <!-- /.sidebar-menu -->
             </div>
